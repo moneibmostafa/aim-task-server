@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 
 async function initDB() {
-    const db = "mongodb://localhost:27017/mydb";
+    // const db = "mongodb://localhost:27017/mydb";
+    const db = "mongodb+srv://mostafamoneib:aimpassword@cluster0.9pkyx.mongodb.net/mydb?retryWrites=true&w=majority"
     mongoose.set('useNewUrlParser', true);
     mongoose.set('useCreateIndex', true);
     mongoose.set('useFindAndModify', false);
