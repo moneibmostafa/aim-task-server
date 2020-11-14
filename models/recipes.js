@@ -6,6 +6,7 @@ const recipeSchema = new mongoose.Schema({
         type: String,
         minlength: 2,
         maxlength: 30,
+        required: true,
     },    
     creatorName: {
         type: String,
@@ -28,6 +29,7 @@ const recipeSchema = new mongoose.Schema({
         calories : {
             type: Number,
             min: 0,
+            required: true,
         },
         protein : {
             type: Number,
@@ -47,30 +49,20 @@ const recipeSchema = new mongoose.Schema({
         },
     },
     ingredients: [ingredientSchema],
-    steps: [{
-        type: String,
-        min: 2,
-        max: 50,
-    }],
+    recipeSteps: {
+        type: 'string',
+        minLength: 5,
+        maxLength: 500,
+    },
     views: {
         type: Number,
         min: 0,
         default: 0,
     },
-    likes: {
-        type: Number,
-        min: 0,
-        default: 0,
-    },
-    dislikes: {
-        type: Number,
-        min: 0,
-        default: 0,
-    },
-    images: [{ 
+    images: { 
         data: Buffer, 
         contentType: String,
-    }],
+    },
 }, { timestamps: true });
 
 const Recipe = mongoose.model('Recipe', recipeSchema);

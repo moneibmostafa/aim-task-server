@@ -13,7 +13,7 @@ const ingredientSchema = new mongoose.Schema(
             enum: ['Cup', 'Teaspoon', 'Tablespoon', 'Scale'],
             required: true,
         },
-        servingSize: {
+        size: {
             type: Number,
             required: true,
             min: 0,
