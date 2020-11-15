@@ -1,19 +1,16 @@
 const mongoose = require('mongoose');
 
+let dbUrl = '';
 async function initDB() {
-    let db = '';
     if (process.env.NODE_ENV === "production") {
-        db = "mongodb+srv://mostafamoneib:aimpassword@cluster0.9pkyx.mongodb.net/mydb?retryWrites=true&w=majority"
+        dbUrl = "mongodb+srv://mostafamoneib:aimpassword@cluster0.9pkyx.mongodb.net/mydb?retryWrites=true&w=majority"
     }
-    else db = "mongodb://localhost:27017/mydb";
+    else dbUrl = "mongodb://localhost:27017/mydb";
     mongoose.set('useNewUrlParser', true);
     mongoose.set('useCreateIndex', true);
     mongoose.set('useFindAndModify', false);
-    // mongoose.set('autoReconnect', false);
-    // mongoose.plugin(accessibleRecordsPlugin);
-    // if (process.env.NODE_ENV === "staging" || process.env.NODE_ENV === "test") options = {}
-    mongoose.connect(db).then(() => {
-        console.log(`Connect to ${db} on enviroment ${process.env.NODE_ENV} ..... `);
+    mongoose.connect(dbUrl).then(() => {
+        console.log(`Connect to ${dbUrl} on enviroment ${process.env.NODE_ENV} ..... `);
     });
 }
 
@@ -43,9 +40,9 @@ db.on('reconnected', () => {
 
 db.on('disconnected', () => {
     console.log(`MongoDB disconnected! Reconnecting in ${reconnectTimeout / 1000}s...`);
-    // setTimeout(() => initDB(), reconnectTimeout);
 });
 
 module.exports = {
     initDB,
+    dbUrl,
 };

@@ -2,15 +2,17 @@ const { Recipe } = require('../models/recipes');
 const { validate } = require('../validation/recipeValidation');
 
 async function create(req, res) {
+    const reqBody = JSON.parse(req.body.data);
+
     const recipeObject = {
-        title: req.body.title,
-        creatorName: req.body.creatorName,
-        servings: req.body.servings,
-        description: req.body.description,
-        nutritionFacts: req.body.nutrition,
-        ingredients: req.body.ingredients,
-        recipeSteps: req.body.recipeSteps,
-        // images,
+        title: reqBody.title,
+        creatorName: reqBody.creatorName,
+        servings: reqBody.servings,
+        description: reqBody.description,
+        nutritionFacts: reqBody.nutrition,
+        ingredients: reqBody.ingredients,
+        recipeSteps: reqBody.recipeSteps,
+        image: req.file.path,
     }
 
     const validationErrors = validate(recipeObject);
@@ -63,16 +65,30 @@ async function mostViewed(req, res) {
 
 async function update(req, res) {
     const { id } = req.params;
+    const reqBody = JSON.parse(req.body.data);
     
-    const recipeObject = {
-        title: req.body.title,
-        creatorName: req.body.creatorName,
-        servings: req.body.servings,
-        description: req.body.description,
-        nutritionFacts: req.body.nutrition,
-        ingredients: req.body.ingredients,
-        recipeSteps: req.body.recipeSteps,
-        // images,
+    let recipeObject;
+    if (req.file) {
+        recipeObject = {
+            title: reqBody.title,
+            creatorName: reqBody.creatorName,
+            servings: reqBody.servings,
+            description: reqBody.description,
+            nutritionFacts: reqBody.nutrition,
+            ingredients: reqBody.ingredients,
+            recipeSteps: reqBody.recipeSteps,
+            image: req.file.path,
+        }
+    } else {
+        recipeObject = {
+            title: reqBody.title,
+            creatorName: reqBody.creatorName,
+            servings: reqBody.servings,
+            description: reqBody.description,
+            nutritionFacts: reqBody.nutrition,
+            ingredients: reqBody.ingredients,
+            recipeSteps: reqBody.recipeSteps,
+        }       
     }
 
     const validationErrors = validate(recipeObject);

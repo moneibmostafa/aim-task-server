@@ -59,9 +59,9 @@ const recipeSchema = new mongoose.Schema({
         min: 0,
         default: 0,
     },
-    images: { 
-        data: Buffer, 
-        contentType: String,
+    image: { 
+        type: String,
+        required: true,
     },
 }, { timestamps: true });
 
